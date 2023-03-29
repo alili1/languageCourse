@@ -8,8 +8,8 @@ import org.json4s.{DefaultFormats, Formats}
 import scala.concurrent.ExecutionContext
 
 class ResponseController (implicit system : ActorSystem, context: ExecutionContext)
-  extends Directives {
-  val routes: Route = this.getResponses
+  extends Controller {
+  override val routes: Route = this.getResponses
 
   private implicit val formatJson: Formats = DefaultFormats
 

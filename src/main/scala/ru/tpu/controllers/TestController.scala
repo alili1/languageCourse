@@ -8,9 +8,8 @@ import org.json4s.{DefaultFormats, Formats}
 import scala.concurrent.{ExecutionContext, Future}
 
 class TestController(implicit system : ActorSystem, context: ExecutionContext)
-  extends Directives {
-  val routes: Route = concat(this.test ~
-    this.getResponses)
+  extends Controller {
+  override val routes: Route = this.test ~ this.getResponses
 
   private implicit val formatJson: Formats = DefaultFormats
 
