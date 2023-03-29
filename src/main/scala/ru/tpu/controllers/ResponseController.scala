@@ -5,27 +5,16 @@ import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusC
 import akka.http.scaladsl.server.{Directives, Route}
 import org.json4s.{DefaultFormats, Formats}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
-class TestController(implicit system : ActorSystem, context: ExecutionContext)
+class ResponseController (implicit system : ActorSystem, context: ExecutionContext)
   extends Directives {
-  val routes: Route = concat(this.test ~
-    this.getResponses)
+  val routes: Route = this.getResponses
 
   private implicit val formatJson: Formats = DefaultFormats
 
-  def test: Route = post {
-    path("test") {
-      entity(as[String]) { request =>
-            complete(HttpResponse(
-              status = StatusCodes.OK,
-              entity = HttpEntity(ContentTypes.`application/json`, "ok")
-            ))
-          }
-      }
-    }
   def getResponses: Route = post {
-    path("getTest") {
+    path("getResponse") {
       entity(as[String]) { request =>
         complete(HttpResponse(
           status = StatusCodes.OK,
@@ -35,3 +24,4 @@ class TestController(implicit system : ActorSystem, context: ExecutionContext)
     }
   }
 }
+
